@@ -33,6 +33,7 @@ public class CiferFrame extends javax.swing.JFrame {
     private String newFileText = "";
     private String encryptText = "";
     private String keyText = "";
+    private String keytxt = "";
 
     //decrypt variables
     private String decryptedText = "";
@@ -231,7 +232,6 @@ public class CiferFrame extends javax.swing.JFrame {
         for (int i = 0; i < tempIteration.size(); i++) {
             keyText += tempIteration.get(i);
         }
-        System.out.println(tempStrings);
         for (int i = 0; i < tempStrings.size(); i++) {
             for (int j = 0; j < tempIteration.size(); j++) {
                 encryptText += (tempStrings.get(i).charAt(tempIteration.get(j)));
@@ -241,7 +241,6 @@ public class CiferFrame extends javax.swing.JFrame {
         String dectFile = jLabel4.getText();
         int lastPos = dectFile.lastIndexOf("\\");
         String dectFilePath = dectFile.substring(0, lastPos);
-        System.out.println(dectFilePath);
         try {
             FileWriter file = new FileWriter(dectFilePath + "\\" + "key.txt");
             file.write(keyText);
@@ -256,21 +255,29 @@ public class CiferFrame extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-        System.out.println("Encrypt Key:" + keyText);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        try (BufferedReader br = new BufferedReader(new FileReader(jLabel9.getText()))) {
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
+        String line = null;
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = new FileReader(jLabel9.getText());
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while ((line = bufferedReader.readLine()) != null) {
+                keytxt += line.toLowerCase(); //adding all lines to a sin
             }
-        }catch(Exception ex){ex.getStackTrace();}
-        if (jLabel9.getText().length() > 30) {
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            ex.getStackTrace();
+        } catch (IOException ex) {
+            ex.getStackTrace();
+        }
+        if (keytxt.length() > 30) {
             decryptIterString.clear();
             finalDecryptText = "";
             secondaryDecryptText = "";
-            String temp = jLabel9.getText();
+            String temp = keytxt;
 
             int tempIterationNumber = temp.length() - 26;                //get the iteration numbers
             ArrayList<Integer> tempIterationAL = new ArrayList<>();
@@ -316,14 +323,15 @@ public class CiferFrame extends javax.swing.JFrame {
                 }
             }
             System.out.print(finalDecryptText);
-            //create a new file to write the output
+            String dectFile = jLabel7.getText();
+            int lastPos = dectFile.lastIndexOf("\\");
+            String dectFilePath = dectFile.substring(0, lastPos);
             try {
-                FileWriter fileWriter = new FileWriter("Decrypt.txt");
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(finalDecryptText);
-                bufferedWriter.close();
-            } catch (IOException ex) {
-                System.out.println("Error writing to file");
+                FileWriter file = new FileWriter(dectFilePath + "\\" + "decrypted.txt");
+                file.write(finalDecryptText);
+                file.close();
+            } catch (Exception e) {
+                e.getStackTrace();
             }
         }
     }//GEN-LAST:event_jLabel6MouseClicked
@@ -362,10 +370,10 @@ public class CiferFrame extends javax.swing.JFrame {
                 }
                 bufferedReader.close();
             } catch (FileNotFoundException ex) {
-                System.out.println("Unable to open file");
-            } catch (IOException ex) {
-                System.out.println("Error reading file");
-            }
+                ex.getStackTrace();
+            }catch(IOException ex){
+                ex.getStackTrace();
+            } 
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -388,12 +396,11 @@ public class CiferFrame extends javax.swing.JFrame {
                 while ((line = bufferedReader.readLine()) != null) {
                     decryptedText += line; //adding all lines to a sin
                 }
-                System.out.println("DecryptedText:" + decryptedText);
                 bufferedReader.close();
             } catch (FileNotFoundException ex) {
-                System.out.println("Unable to open file");
+                ex.getStackTrace();
             } catch (IOException ex) {
-                System.out.println("Error reading file");
+                ex.getStackTrace();
             }
         }
     }//GEN-LAST:event_jLabel7MouseClicked
