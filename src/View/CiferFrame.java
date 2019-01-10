@@ -406,7 +406,7 @@ public class CiferFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
