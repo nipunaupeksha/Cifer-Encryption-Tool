@@ -257,17 +257,6 @@ public class CiferFrame extends javax.swing.JFrame {
             ex.getStackTrace();
         }
         System.out.println("Encrypt Key:" + keyText);
-        //create a new file to write the output
-//        try {
-//            FileWriter fileWriter = new FileWriter("Encrypt.txt");
-//            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-//            bufferedWriter.write(encryptText);
-//            System.out.println("Encrpt text:" + encryptText);
-//            bufferedWriter.close();
-//
-//        } catch (IOException ex) {
-//            System.out.println("Error writing to file");
-//        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
